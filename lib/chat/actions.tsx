@@ -174,13 +174,19 @@ async function submitUserMessage(content: string) {
       showTweetCard: {
         description: 'Shows the tweet card.',
         parameters: z.object({
+          fullName: z.string().describe('The full name of the tweet author'),
+          username: z.string().describe('The username of the tweet author'),
           content: z.string().describe('The content of the tweet'),
-          profilePicture: z
-            .string()
-            .optional()
-            .describe('The profile picture url')
+          time: z.string().describe('The time of the tweet'),
+          date: z.string().describe('The date of the tweet')
         }),
-        generate: async function* ({ profilePicture, content }) {
+        generate: async function* ({
+          fullName,
+          username,
+          content,
+          time,
+          date
+        }) {
           yield (
             <BotCard>
               <StocksSkeleton />
@@ -203,7 +209,7 @@ async function submitUserMessage(content: string) {
                     type: 'tool-call',
                     toolName: 'showTweetCard',
                     toolCallId,
-                    args: { profilePicture, content }
+                    args: { fullName, username, content, time, date }
                   }
                 ]
               },
@@ -216,8 +222,11 @@ async function submitUserMessage(content: string) {
                     toolName: 'showTweetCard',
                     toolCallId,
                     result: {
-                      profilePicture,
-                      content
+                      fullName,
+                      username,
+                      content,
+                      time,
+                      date
                     }
                   }
                 ]
@@ -225,7 +234,15 @@ async function submitUserMessage(content: string) {
             ]
           })
 
-          return <Tweet />
+          return (
+            <Tweet
+              fullName={fullName}
+              username={username}
+              content={content}
+              time={time}
+              date={date}
+            />
+          )
         }
       }
     }

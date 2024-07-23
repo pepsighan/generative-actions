@@ -1,20 +1,32 @@
-export default function Tweet() {
+type TweetProps = {
+  fullName: string
+  username: string
+  content: string
+  time: string
+  date: string
+}
+
+export default function Tweet({
+  fullName,
+  username,
+  content,
+  time,
+  date
+}: TweetProps) {
   return (
     <>
       <div className="bg-white rounded-xl shadow-md p-6 max-w-md w-full">
         <div className="flex items-center mb-4">
-          <div className="size-12 rounded-full mr-4" />
           <div>
-            <h2 className="font-bold text-gray-900">John Doe</h2>
-            <p className="text-gray-600">@johndoe</p>
+            <h2 className="font-bold text-gray-900">{fullName}</h2>
+            <p className="text-gray-600">{username}</p>
           </div>
         </div>
-        <p className="text-gray-800 mb-4">
-          {`This is an example tweet created using Tailwind CSS. It's responsive
-          and can be easily customized to fit your website's design.`}
-        </p>
+        <p className="text-gray-800 mb-4">{content}</p>
         <div className="flex justify-between text-gray-500">
-          <span>10:30 AM · Jul 23, 2024</span>
+          <span>
+            {time} · {date}
+          </span>
           <div className="flex space-x-4">
             <button className="hover:text-blue-500">
               <svg
