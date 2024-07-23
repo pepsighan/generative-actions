@@ -1,3 +1,5 @@
+import { MDXRemote } from 'remote-mdx/rsc'
+
 type EmailCardProps = {
   fromName: string
   from: string
@@ -23,11 +25,17 @@ export default function EmailCard({
             <h2 className="font-bold text-gray-900">{fromName}</h2>
             <p className="text-sm text-gray-600">{from}</p>
           </div>
+          <div>
+            <h2 className="font-bold text-gray-900">{toName}</h2>
+            <p className="text-sm text-gray-600">{to}</p>
+          </div>
         </div>
         <span className="text-sm text-gray-500">Jul 23, 2024, 10:30 AM</span>
       </div>
       <h3 className="text-xl font-semibold text-gray-800 mb-2">{subject}</h3>
-      <div className="border-y border-gray-200 py-4 mb-4">{content}</div>
+      <div className="border-y border-gray-200 py-4 mb-4">
+        <MDXRemote source={content} />
+      </div>
       <div className="flex justify-between items-center">
         <div className="flex space-x-2">
           <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">

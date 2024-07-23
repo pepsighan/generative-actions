@@ -255,7 +255,9 @@ async function submitUserMessage(content: string) {
           toName: z.string().describe('The name of the recipient of the email'),
           to: z.string().describe('The recipient of the email'),
           subject: z.string().describe('The subject of the email'),
-          content: z.string().describe('The content of the email')
+          content: z
+            .string()
+            .describe('A well-formatted content of the email in markdown')
         }),
         generate: async function* ({
           fromName,
