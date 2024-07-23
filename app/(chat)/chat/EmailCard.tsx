@@ -19,15 +19,21 @@ export default function EmailCard({
 }: EmailCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 max-w-2xl w-full">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
-          <div>
-            <h2 className="font-bold text-gray-900">{fromName}</h2>
-            <p className="text-sm text-gray-600">{from}</p>
+      <div className="flex justify-between mb-4">
+        <div>
+          <div className="flex items-center">
+            <div>
+              <p className="text-sm text-gray-400">From</p>
+              <h2 className="font-bold text-gray-900">{fromName}</h2>
+              <p className="text-sm text-gray-600">{from}</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-bold text-gray-900">{toName}</h2>
-            <p className="text-sm text-gray-600">{to}</p>
+          <div className="flex items-center mt-4">
+            <div>
+              <p className="text-sm text-gray-400">To</p>
+              <h2 className="font-bold text-gray-900">{toName}</h2>
+              <p className="text-sm text-gray-600">{to}</p>
+            </div>
           </div>
         </div>
         <span className="text-sm text-gray-500">Jul 23, 2024, 10:30 AM</span>
