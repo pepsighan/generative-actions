@@ -36,6 +36,7 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { auth } from '@/auth'
 import Tweet from '@/app/(chat)/chat/Tweet'
+import EmailCard from '@/app/(chat)/chat/EmailCard'
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -241,6 +242,85 @@ async function submitUserMessage(content: string) {
               content={content}
               time={time}
               date={date}
+            />
+          )
+        }
+      },
+
+      showEmail: {
+        description: 'Shows the email card.',
+        parameters: z.object({
+          fromName: z.string().describe('The name of the sender of the email'),
+          from: z.string().describe('The sender of the email'),
+          toName: z.string().describe('The name of the recipient of the email'),
+          to: z.string().describe('The recipient of the email'),
+          subject: z.string().describe('The subject of the email'),
+          content: z.string().describe('The content of the email')
+        }),
+        generate: async function* ({
+          fromName,
+          from,
+          toName,
+          to,
+          subject,
+          content
+        }) {
+          yield (
+            <BotCard>
+              <StocksSkeleton />
+            </BotCard>
+          )
+
+          await sleep(1000)
+
+          const toolCallId = nanoid()
+
+          aiState.done({
+            ...aiState.get(),
+            messages: [
+              ...aiState.get().messages,
+              {
+                id: nanoid(),
+                role: 'assistant',
+                content: [
+                  {
+                    type: 'tool-call',
+                    toolName: 'showEmail',
+                    toolCallId,
+                    args: { fromName, from, toName, to, subject, content }
+                  }
+                ]
+              },
+              {
+                id: nanoid(),
+                role: 'tool',
+                content: [
+                  {
+                    type: 'tool-result',
+                    toolName: 'showEmail',
+                    toolCallId,
+                    result: {
+                      fromName,
+                      from,
+                      toName,
+                      to,
+                      subject,
+                      content
+                    }
+                  }
+                ]
+              }
+            ]
+          })
+
+          return (
+            <EmailCard
+              fromName={fromName}
+              from={from}
+              toName={toName}
+              to={to}
+              subject={subject}
+              content={content}
             />
           )
         }
