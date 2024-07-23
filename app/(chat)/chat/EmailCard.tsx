@@ -1,4 +1,4 @@
-import { MDXRemote } from 'remote-mdx/rsc'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 type EmailCardProps = {
   fromName: string
